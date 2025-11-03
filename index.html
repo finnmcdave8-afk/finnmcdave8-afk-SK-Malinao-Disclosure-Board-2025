@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Disclosure Board</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav>
+    <div class="nav-container">
+      <div class="nav-left">
+        <img src="Images/malinao.png" alt="Barangay Logo">
+        <img src="Images/sk2.png" alt="SK Logo">
+      </div>
+
+      <div class="nav-center">
+        <h1>FULL DISCLOSURE BOARD</h1>
+      </div>
+
+      <div class="nav-right">
+        <img src="Images/pasig.png" alt="Municipal Logo">
+        <img src="Images/DILG-Logo (1).png" alt="DILG Logo">
+      </div>
+    </div>
+  </nav>
+
+  <!-- HEADER -->
+  <header>
+    <h2>SANGGUNIANG KABATAAN NG MALINAO</h2>
+  </header>
+
+  <!-- PDF GRID -->
+  <section class="pdf-grid">
+    <div class="pdf-box" data-type="pdf" data-src="Comprehensive Barangay Youth Development.pdf">
+      <h3>COMPREHENSIVE BARANGAY YOUTH DEVELOPMENT PLAN (CBYDP)</h3>
+      <iframe src="Comprehensive Barangay Youth Development.pdf#toolbar=0"></iframe>
+    </div>
+
+    <div class="pdf-box" data-type="pdf" data-src="ABYIP.pdf">
+      <h3>ANNUAL BARANGAY YOUTH INVESTMENT PROGRAM (ABYIP)</h3>
+      <iframe src="PDF/ABYIP.pdf"></iframe>
+    </div>
+
+    <div class="pdf-box" data-type="pdf" data-src="Annual Budget.pdf">
+      <h3>ANNUAL BUDGET</h3>
+      <iframe src="PDF/Annual Budget.pdf#toolbar=0"></iframe>
+    </div>
+
+    <div class="pdf-box" data-type="pdf" data-src="MIPR.pdf">
+      <h3>MONTHLY ITEMIZED LIST OF PURCHASE REQUEST</h3>
+      <iframe src="PDF/MIPR.pdf#toolbar=0"></iframe>
+    </div>
+
+    <div class="pdf-box" data-type="pdf" data-src="roc.pdf">
+      <h3>REGISTER OF CASH IN BANK (RCB)</h3>
+      <iframe src="PDF/roc.pdf#toolbar=0"></iframe>
+    </div>
+  </section>
+
+  <!-- VIEWER -->
+  <div class="viewer" id="viewer">
+    <div class="viewer-content" id="viewer-content">
+      <button class="close-btn" id="closeBtn">&times;</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p><strong>Sangguniang Kabataan ng Malinao</strong></p>
+    <p>skmalinao23@gmail.com</p>
+  </footer>
+
+  <script>
+    const boxes = document.querySelectorAll('.pdf-box');
+    const viewer = document.getElementById('viewer');
+    const viewerContent = document.getElementById('viewer-content');
+
+    boxes.forEach(box => {
+      box.addEventListener('click', () => {
+        const src = box.getAttribute('data-src');
+        viewer.classList.add('active');
+        viewerContent.innerHTML = `
+          <button class="close-btn" id="closeBtn">&times;</button>
+          <iframe src="${src}#toolbar=1"></iframe>
+        `;
+        document.getElementById('closeBtn').addEventListener('click', () => {
+          viewer.classList.remove('active');
+        });
+      });
+    });
+
+    viewer.addEventListener('click', e => {
+      if (e.target === viewer) viewer.classList.remove('active');
+    });
+
+    window.addEventListener('keydown', e => {
+      if (e.key === 'Escape') viewer.classList.remove('active');
+    });
+  </script>
+</body>
+</html>
