@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Full Disclosure Board</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
-  <style>
+ <style>
 
 * {
   margin: 0;
@@ -36,198 +36,27 @@ body {
    NAVIGATION
    ========================================================= */
 
-.nav-center {
-  flex: 1;
-  min-width: 280px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-.nav-title-bg {
-
-  position: relative;
-
-  width: 100%;
-  max-width: 650px;
-
-  padding: 22px 35px;
-
-  border-radius: 18px;
-
-  overflow: hidden;
-
-  text-align: center;
-
-  background-image:
-    linear-gradient(
-      rgba(3, 22, 52, 0.72),
-      rgba(3, 22, 52, 0.72)
-    ),
-    url("YOUR-IMAGE-HERE.jpg");
-
-  background-size: cover;
-
-  background-position: center;
-
-  background-repeat: no-repeat;
-
-  border:
-    1px solid
-    rgba(255,255,255,0.35);
-
-  box-shadow:
-    0 8px 25px
-    rgba(0,0,0,0.25);
-
-  transition:
-    transform 0.4s ease,
-    box-shadow 0.4s ease;
-}
-
-
-/* Animated background */
-
-.nav-title-bg::before {
-
-  content: "";
-
-  position: absolute;
-
-  inset: 0;
-
+nav {
   background:
     linear-gradient(
-      120deg,
-      transparent 20%,
-      rgba(255,255,255,0.18) 50%,
-      transparent 80%
+      90deg,
+      #ffffff 0%,
+      #e8edff 100%
     );
 
-  transform: translateX(-120%);
+  border-top: 6px solid #1a3da7;
 
-  animation:
-    titleShine 6s ease-in-out infinite;
+  border-bottom: 10px solid #092059;
 
-  pointer-events: none;
-}
-
-
-@keyframes titleShine {
-
-  0% {
-    transform: translateX(-120%);
-  }
-
-  45%,
-  100% {
-    transform: translateX(120%);
-  }
-
-}
-
-
-.nav-title-bg:hover {
-
-  transform:
-    translateY(-3px);
+  padding: 10px 20px;
 
   box-shadow:
-    0 12px 35px
-    rgba(0,0,0,0.35);
-}
-
-
-/* Main title */
-
-.nav-title-bg h1 {
+    0 5px 20px rgba(0, 0, 0, 0.2);
 
   position: relative;
 
-  z-index: 2;
-
-  margin: 0;
-
-  font-size: 1.8rem;
-
-  font-weight: 900;
-
-  letter-spacing: 2px;
-
-  text-transform: uppercase;
-
-  color: #ffffff;
-
-  text-shadow:
-    0 3px 10px
-    rgba(0,0,0,0.6);
+  z-index: 100;
 }
-
-
-/* Subtitle */
-
-.nav-title-bg span {
-
-  position: relative;
-
-  z-index: 2;
-
-  display: block;
-
-  margin-top: 6px;
-
-  color: #dbe7ff;
-
-  font-size: 0.7rem;
-
-  font-weight: 700;
-
-  letter-spacing: 3px;
-
-  text-transform: uppercase;
-
-  text-shadow:
-    0 2px 6px
-    rgba(0,0,0,0.6);
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 600px) {
-
-  .nav-center {
-    width: 100%;
-    min-width: 0;
-  }
-
-  .nav-title-bg {
-
-    max-width: 95%;
-
-    padding:
-      16px 15px;
-
-    border-radius: 14px;
-  }
-
-  .nav-title-bg h1 {
-
-    font-size: 1.15rem;
-
-    letter-spacing: 1px;
-  }
-
-  .nav-title-bg span {
-
-    font-size: 0.55rem;
-
-    letter-spacing: 1.5px;
-  }
-
 
 
 .nav-container {
@@ -307,7 +136,56 @@ body {
 }
 
 
-/* ========================================================= HEADER ========================================================= */ header { background: linear-gradient( 135deg, #e8edff 0%, #ffffff 100% ); text-align: center; padding: 40px 15px 50px; border-bottom: 8px solid #092059; box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25); } header h2 { font-size: 1.6rem; background: linear-gradient( 90deg, #0a2a5f, #1a3da7 ); color: white; display: inline-block; padding: 12px 30px; border-radius: 8px; font-weight: 800; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); letter-spacing: 0.8px; text-transform: uppercase; }
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+  background:
+    linear-gradient(
+      135deg,
+      #e8edff 0%,
+      #ffffff 100%
+    );
+
+  text-align: center;
+
+  padding: 40px 15px 50px;
+
+  border-bottom: 8px solid #092059;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+header h2 {
+  font-size: 1.6rem;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0a2a5f,
+      #1a3da7
+    );
+
+  color: white;
+
+  display: inline-block;
+
+  padding: 12px 30px;
+
+  border-radius: 8px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.2);
+
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
+}
 
 
 /* =========================================================
@@ -1234,6 +1112,268 @@ body {
 }
 
 
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+
+  text-align: center;
+
+  margin: 70px 0 50px;
+
+  font-size: 0.95rem;
+
+  color: #cbd7f7;
+
+  padding: 0 20px;
+}
+
+
+footer p:first-child {
+
+  font-weight: 700;
+
+  color: #ffffff;
+
+  letter-spacing: 1px;
+}
+
+
+footer p:last-child {
+
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .nav-container {
+
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+
+  .nav-left,
+  .nav-right {
+
+    justify-content: center;
+
+    gap: 15px;
+  }
+
+
+  .nav-center h1 {
+
+    font-size: 1.5rem;
+  }
+
+
+  .document-year-section
+  .pdf-grid {
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(250px, 1fr)
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .nav-container img {
+
+    width: 55px;
+
+    height: 55px;
+  }
+
+
+  .nav-center h1 {
+
+    font-size: 1.2rem;
+  }
+
+
+  header h2 {
+
+    font-size: 1rem;
+
+    padding:
+      8px 16px;
+  }
+
+
+  .document-year-section {
+
+    margin:
+      45px auto 65px;
+  }
+
+
+  .year-title {
+
+    width: 95%;
+
+    gap: 10px;
+
+    margin-bottom: 30px;
+  }
+
+
+  .year-line {
+
+    max-width: 55px;
+  }
+
+
+  .year-line::after {
+
+    width: 5px;
+
+    height: 5px;
+  }
+
+
+  .year-content {
+
+    min-width: 150px;
+  }
+
+
+  .year-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    font-size: 26px;
+
+    border-radius: 18px;
+  }
+
+
+  .year-label {
+
+    font-size: 36px;
+
+    letter-spacing: 3px;
+  }
+
+
+  .year-subtitle {
+
+    font-size: 8px;
+
+    letter-spacing: 2px;
+  }
+
+
+  .document-year-section
+  .pdf-grid {
+
+    width: 92%;
+
+    grid-template-columns:
+      1fr;
+
+    gap: 20px;
+  }
+
+
+  .document-year-section
+  .pdf-box {
+
+    min-height: 315px;
+  }
+
+
+  .document-icon {
+
+    width: 82px;
+
+    height: 82px;
+
+    font-size: 36px;
+
+    border-radius: 23px;
+  }
+
+
+  .document-year-section
+  .pdf-box h3 {
+
+    font-size: 16px;
+  }
+
+
+  .viewer {
+
+    padding: 8px;
+  }
+
+
+  .viewer-content {
+
+    width: 98vw;
+
+    height: 94vh;
+
+    border-radius: 12px;
+  }
+
+
+  .close-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    font-size: 22px;
+
+    top: 10px;
+
+    right: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+  }
+
+}
+
+</style>
 /* =========================================================
    FOOTER
    ========================================================= */
