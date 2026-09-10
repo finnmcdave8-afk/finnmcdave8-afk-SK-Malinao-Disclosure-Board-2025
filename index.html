@@ -6,455 +6,1374 @@
   <title>Full Disclosure Board</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet" />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
 
-    body {
-      background: radial-gradient(circle at top, #0d2a70, #021634);
-      color: #fff;
-      overflow-x: hidden;
-      min-height: 100vh;
-    }
-
-    nav {
-      background: linear-gradient(90deg, #ffffff 0%, #e8edff 100%);
-      border-top: 6px solid #1a3da7;
-      border-bottom: 10px solid #092059;
-      padding: 10px 20px;
-      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
-      position: relative;
-      z-index: 100;
-    }
-
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1400px;
-      margin: 0 auto;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
-
-    .nav-left,
-    .nav-right {
-      display: flex;
-      align-items: center;
-      gap: 20px;
-    }
-
-    .nav-center {
-      text-align: center;
-      flex: 1;
-      min-width: 220px;
-    }
-
-    .nav-container img {
-      width: 70px;
-      height: 70px;
-      object-fit: contain;
-      transition: transform 0.3s ease;
-    }
-
-    .nav-container img:hover {
-      transform: scale(1.1);
-    }
-
-    .nav-container h1 {
-      font-size: 1.8rem;
-      font-weight: 900;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, #0a2a5f, #1a3da7);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    header {
-      background: linear-gradient(135deg, #e8edff 0%, #ffffff 100%);
-      text-align: center;
-      padding: 40px 15px 50px;
-      border-bottom: 8px solid #092059;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
-    }
-
-    header h2 {
-      font-size: 1.6rem;
-      background: linear-gradient(90deg, #0a2a5f, #1a3da7);
-      color: white;
-      display: inline-block;
-      padding: 12px 30px;
-      border-radius: 8px;
-      font-weight: 800;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      letter-spacing: 0.8px;
-      text-transform: uppercase;
-    }
-
-    .pdf-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 25px;
-      justify-content: center;
-      margin: 50px auto;
-      max-width: 1200px;
-      padding: 0 20px;
-    }
-
-    .pdf-box {
-      background: linear-gradient(180deg, #ffffff, #f1f5ff);
-      color: #0a2a5f;
-      border-radius: 12px;
-      text-align: center;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-      transition: all 0.3s ease;
-      overflow: hidden;
-      cursor: pointer;
-      position: relative;
-    }
-
-    .pdf-box::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(10,42,95,0.05), rgba(10,42,95,0.3));
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-
-    .pdf-box:hover::after {
-      opacity: 1;
-    }
-
-    .pdf-box:hover {
-      transform: translateY(-8px) scale(1.02);
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-    }
-
-    .pdf-box h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 12px;
-      background: linear-gradient(90deg, #0a2a5f, #1a3da7);
-      color: white;
-      min-height: 55px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pdf-box iframe, .pdf-box object {
-      width: 100%;
-      height: 260px;
-      border: none;
-      object-fit: cover;
-    }
-
-    .viewer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.95);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 1000;
-      padding: 30px;
-      backdrop-filter: blur(5px);
-    }
-
-    .viewer.active {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .viewer-content {
-      background: #fff;
-      border-radius: 15px;
-      width: 95vw;
-      height: 95vh;
-      max-width: 1300px;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 0 30px rgba(255,255,255,0.1);
-      animation: zoomIn 0.4s ease;
-    }
-
-    .viewer-content iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-      object-fit: contain;
-    }
-
-    .close-btn {
-      position: absolute;
-      top: 15px;
-      right: 15px;
-      background: #ff4d4d;
-      color: white;
-      border: none;
-      border-radius: 50%;
-      font-size: 24px;
-      width: 45px;
-      height: 45px;
-      cursor: pointer;
-      z-index: 10;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.4);
-      transition: background 0.3s ease, transform 0.2s ease;
-    }
-
-    .close-btn:hover {
-      background: #ff1a1a;
-      transform: scale(1.1);
-    }
-
-    @keyframes zoomIn {
-      from { transform: scale(0.85); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-
-    footer {
-      text-align: center;
-      margin: 50px 0;
-      font-size: 0.95rem;
-      color: #cbd7f7;
-      padding: 0 20px;
-    }
-
-    footer p:first-child {
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px;
-    }
-
-    footer p:last-child {
-      opacity: 0.9;
-    }
-
-    @media (max-width: 992px) {
-      .nav-container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .nav-left,
-      .nav-right {
-        justify-content: center;
-        gap: 15px;
-      }
-
-      .nav-center h1 {
-        font-size: 1.5rem;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .nav-container img {
-        width: 55px;
-        height: 55px;
-      }
-
-      .nav-center h1 {
-        font-size: 1.2rem;
-      }
-
-      header h2 {
-        font-size: 1rem;
-        padding: 8px 16px;
-      }
-
-      s/* =========================================
-   YEAR DOCUMENT SECTION
-   ========================================= */
-
-.document-year-section {
-  width: 100%;
-  margin: 60px auto;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
 
 
-/* =========================================
-   CENTERED YEAR TITLE
-   ========================================= */
+body {
+  background:
+    radial-gradient(
+      circle at top,
+      #0d2a70 0%,
+      #061c4d 45%,
+      #021634 100%
+    );
 
-.year-title {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto 40px;
+  color: #fff;
 
+  overflow-x: hidden;
+
+  min-height: 100vh;
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ========================================================= */
+
+nav {
+  background:
+    linear-gradient(
+      90deg,
+      #ffffff 0%,
+      #e8edff 100%
+    );
+
+  border-top: 6px solid #1a3da7;
+
+  border-bottom: 10px solid #092059;
+
+  padding: 10px 20px;
+
+  box-shadow:
+    0 5px 20px rgba(0, 0, 0, 0.2);
+
+  position: relative;
+
+  z-index: 100;
+}
+
+
+.nav-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 25px;
 
+  justify-content: space-between;
+
+  align-items: center;
+
+  max-width: 1400px;
+
+  margin: 0 auto;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+
+.nav-left,
+.nav-right {
+  display: flex;
+
+  align-items: center;
+
+  gap: 20px;
+}
+
+
+.nav-center {
   text-align: center;
-}
 
-
-/* Decorative lines */
-
-.year-line {
   flex: 1;
-  height: 2px;
-
-  background: linear-gradient(
-    to right,
-    transparent,
-    #146b4d,
-    transparent
-  );
-
-  max-width: 250px;
-}
-
-
-/* Center content */
-
-.year-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 
   min-width: 220px;
 }
 
 
-/* Folder icon */
+.nav-container img {
+  width: 70px;
 
-.year-icon {
-  width: 50px;
-  height: 50px;
+  height: 70px;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  object-fit: contain;
 
-  margin-bottom: 8px;
-
-  border-radius: 50%;
-
-  background: #146b4d;
-  color: white;
-
-  font-size: 22px;
-
-  box-shadow:
-    0 5px 15px rgba(20, 107, 77, 0.25);
+  transition:
+    transform 0.4s ease;
 }
 
 
-/* Year */
+.nav-container img:hover {
+  transform:
+    scale(1.1)
+    rotate(3deg);
+}
 
-.year-label {
-  font-size: 42px;
-  line-height: 1;
+
+.nav-container h1 {
+  font-size: 1.8rem;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  text-transform: uppercase;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0a2a5f,
+      #1a3da7
+    );
+
+  -webkit-background-clip: text;
+
+  -webkit-text-fill-color: transparent;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+header {
+  background:
+    linear-gradient(
+      135deg,
+      #e8edff 0%,
+      #ffffff 100%
+    );
+
+  text-align: center;
+
+  padding: 40px 15px 50px;
+
+  border-bottom: 8px solid #092059;
+
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+
+header h2 {
+  font-size: 1.6rem;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0a2a5f,
+      #1a3da7
+    );
+
+  color: white;
+
+  display: inline-block;
+
+  padding: 12px 30px;
+
+  border-radius: 8px;
 
   font-weight: 800;
 
-  letter-spacing: 3px;
+  box-shadow:
+    0 4px 10px rgba(0, 0, 0, 0.2);
 
-  color: #12372a;
+  letter-spacing: 0.8px;
+
+  text-transform: uppercase;
 }
 
 
-/* Subtitle */
+/* =========================================================
+   DOCUMENTS CONTAINER
+   ========================================================= */
+
+.documents-container {
+  width: 100%;
+
+  padding:
+    30px 0 20px;
+}
+
+
+/* =========================================================
+   YEAR SECTION
+   ========================================================= */
+
+.document-year-section {
+  width: 100%;
+
+  margin:
+    60px auto 90px;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   YEAR TITLE
+   ========================================================= */
+
+.year-title {
+  width: 92%;
+
+  max-width: 1400px;
+
+  margin:
+    0 auto 45px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 28px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   YEAR DECORATIVE LINE
+   ========================================================= */
+
+.year-line {
+  flex: 1;
+
+  height: 2px;
+
+  max-width: 320px;
+
+  background:
+    linear-gradient(
+      to right,
+      transparent,
+      rgba(255,255,255,0.8),
+      transparent
+    );
+
+  position: relative;
+}
+
+
+.year-line::after {
+  content: "";
+
+  position: absolute;
+
+  top: 50%;
+
+  left: 50%;
+
+  width: 7px;
+
+  height: 7px;
+
+  background: #ffffff;
+
+  border-radius: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  box-shadow:
+    0 0 12px
+    rgba(255,255,255,0.8);
+}
+
+
+/* =========================================================
+   YEAR CONTENT
+   ========================================================= */
+
+.year-content {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 240px;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   YEAR ICON
+   ========================================================= */
+
+.year-icon {
+  width: 72px;
+
+  height: 72px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border-radius: 22px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #dce6ff
+    );
+
+  color: #123b91;
+
+  font-size: 32px;
+
+  box-shadow:
+    0 10px 30px
+    rgba(0,0,0,0.25);
+
+  border:
+    2px solid
+    rgba(255,255,255,0.7);
+
+  animation:
+    floatingFolder 3s ease-in-out infinite;
+
+  position: relative;
+}
+
+
+.year-icon::before {
+  content: "";
+
+  position: absolute;
+
+  inset: -5px;
+
+  border-radius: 25px;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.25);
+
+  animation:
+    pulseRing 2.5s ease-out infinite;
+}
+
+
+.year-icon span {
+  display: block;
+
+  filter:
+    drop-shadow(
+      0 3px 5px
+      rgba(0,0,0,0.2)
+    );
+}
+
+
+@keyframes floatingFolder {
+
+  0%,
+  100% {
+    transform:
+      translateY(0);
+  }
+
+  50% {
+    transform:
+      translateY(-7px);
+  }
+
+}
+
+
+@keyframes pulseRing {
+
+  0% {
+    transform:
+      scale(0.9);
+
+    opacity: 0.8;
+  }
+
+  100% {
+    transform:
+      scale(1.25);
+
+    opacity: 0;
+  }
+
+}
+
+
+/* =========================================================
+   YEAR NUMBER
+   ========================================================= */
+
+.year-label {
+  font-size: 48px;
+
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 5px;
+
+  color: #ffffff;
+
+  text-shadow:
+    0 5px 15px
+    rgba(0,0,0,0.3);
+}
+
+
+/* =========================================================
+   YEAR SUBTITLE
+   ========================================================= */
 
 .year-subtitle {
-  margin-top: 8px;
+  margin-top: 10px;
 
-  font-size: 12px;
-  font-weight: 700;
+  font-size: 11px;
 
-  letter-spacing: 3px;
+  font-weight: 800;
 
-  color: #6b7280;
+  letter-spacing: 4px;
+
+  color: #bfcdf5;
+
+  text-transform: uppercase;
 }
 
 
-
+/* =========================================================
+   PDF GRID
+   ========================================================= */
 
 .document-year-section .pdf-grid {
-  width: 90%;
+
+  width: 92%;
+
   max-width: 1400px;
 
   margin: 0 auto;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(
+      auto-fit,
+      minmax(260px, 1fr)
+    );
+
+  gap: 28px;
+
+  padding: 0;
 }
 
 
-/* =========================================
-   SMALL ENHANCEMENT TO EXISTING PDF BOX
-   ========================================= */
+/* =========================================================
+   DOCUMENT CARD
+   ========================================================= */
 
 .document-year-section .pdf-box {
+
+  min-height: 330px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.98),
+      rgba(235,242,255,0.96)
+    );
+
+  color: #0a2a5f;
+
+  border-radius: 20px;
+
+  overflow: hidden;
+
+  cursor: pointer;
+
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  text-align: center;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.7);
+
+  box-shadow:
+    0 12px 35px
+    rgba(0,0,0,0.25);
+
+  transition:
+    transform 0.4s cubic-bezier(.2,.8,.2,1),
+    box-shadow 0.4s ease;
+
+  animation:
+    cardAppear 0.8s ease both;
+}
+
+
+/* =========================================================
+   CARD ENTRANCE ANIMATION
+   ========================================================= */
+
+@keyframes cardAppear {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(30px)
+      scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* Staggered animation */
+
+.pdf-box:nth-child(1) {
+  animation-delay: 0.05s;
+}
+
+.pdf-box:nth-child(2) {
+  animation-delay: 0.12s;
+}
+
+.pdf-box:nth-child(3) {
+  animation-delay: 0.19s;
+}
+
+.pdf-box:nth-child(4) {
+  animation-delay: 0.26s;
+}
+
+.pdf-box:nth-child(5) {
+  animation-delay: 0.33s;
+}
+
+
+/* =========================================================
+   CARD TOP LIGHT EFFECT
+   ========================================================= */
+
+.document-year-section .pdf-box::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -100%;
+
+  width: 70%;
+
+  height: 100%;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.55),
+      transparent
+    );
+
+  transform:
+    skewX(-20deg);
+
+  transition:
+    left 0.7s ease;
+
+  z-index: 2;
+
+  pointer-events: none;
+}
+
+
+.document-year-section .pdf-box:hover::before {
+  left: 130%;
+}
+
+
+/* =========================================================
+   CARD HOVER
+   ========================================================= */
+
+.document-year-section .pdf-box:hover {
+
+  transform:
+    translateY(-12px)
+    scale(1.025);
+
+  box-shadow:
+    0 25px 55px
+    rgba(0,0,0,0.38);
+}
+
+
+/* =========================================================
+   DOCUMENT ICON
+   ========================================================= */
+
+.document-icon {
+
+  width: 92px;
+
+  height: 92px;
+
+  margin-top: 30px;
+
+  margin-bottom: 18px;
+
+  border-radius: 26px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-size: 42px;
+
+  position: relative;
+
+  z-index: 3;
+
+  transition:
+    transform 0.4s ease,
+    box-shadow 0.4s ease;
+}
+
+
+/* Icon hover */
+
+.pdf-box:hover .document-icon {
+
+  transform:
+    translateY(-6px)
+    rotate(-3deg)
+    scale(1.08);
+}
+
+
+/* =========================================================
+   ICON DESIGNS
+   ========================================================= */
+
+.cbydp-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #dbeafe,
+      #bfdbfe
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(37,99,235,0.25);
+}
+
+
+.abyip-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #ede9fe,
+      #ddd6fe
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(124,58,237,0.25);
+}
+
+
+.budget-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #dcfce7,
+      #bbf7d0
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(22,163,74,0.25);
+}
+
+
+.purchase-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #fef3c7,
+      #fde68a
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(217,119,6,0.25);
+}
+
+
+.rcb-icon {
+
+  background:
+    linear-gradient(
+      135deg,
+      #fce7f3,
+      #fbcfe8
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(219,39,119,0.25);
+}
+
+
+/* =========================================================
+   DOCUMENT CONTENT
+   ========================================================= */
+
+.document-content {
+
+  padding:
+    0 25px 25px;
+
+  flex: 1;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  position: relative;
+
+  z-index: 3;
+}
+
+
+/* =========================================================
+   CATEGORY
+   ========================================================= */
+
+.document-category {
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 2px;
+
+  color: #64748b;
+
+  margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   DOCUMENT TITLE
+   ========================================================= */
+
+.document-year-section .pdf-box h3 {
+
+  font-size: 17px;
+
+  line-height: 1.35;
+
+  font-weight: 800;
+
+  color: #0a2a5f;
+
+  min-height: auto;
+
+  padding: 0;
+
+  background: none;
+
+  display: block;
+
+  text-transform: none;
+}
+
+
+/* =========================================================
+   DOCUMENT YEAR / DESCRIPTION
+   ========================================================= */
+
+.document-year-section .pdf-box p {
+
+  margin-top: 8px;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  color: #64748b;
+
+  letter-spacing: 1px;
+}
+
+
+/* =========================================================
+   VIEW DOCUMENT BUTTON
+   ========================================================= */
+
+.document-button {
+
+  margin-top: auto;
+
+  padding-top: 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  font-size: 10px;
+
+  font-weight: 900;
+
+  letter-spacing: 1.5px;
+
+  color: #1a3da7;
+
+  transition:
+    gap 0.3s ease;
+}
+
+
+.pdf-box:hover .document-button {
+
+  gap: 14px;
+}
+
+
+.document-button .arrow {
+
+  font-size: 18px;
+
+  line-height: 1;
+
+  transition:
+    transform 0.3s ease;
+}
+
+
+.pdf-box:hover
+.document-button .arrow {
+
+  transform:
+    translateX(4px);
+}
+
+
+/* =========================================================
+   DOCUMENT NUMBER
+   ========================================================= */
+
+.document-number {
+
+  position: absolute;
+
+  top: 15px;
+
+  right: 17px;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: 1px;
+
+  color: #94a3b8;
+
+  z-index: 4;
+}
+
+
+/* =========================================================
+   PDF VIEWER
+   ========================================================= */
+
+.viewer {
+
+  position: fixed;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100vw;
+
+  height: 100vh;
+
+  background:
+    rgba(0,0,0,0.92);
+
+  display: none;
+
+  justify-content: center;
+
+  align-items: center;
+
+  z-index: 1000;
+
+  padding: 20px;
+
+  backdrop-filter:
+    blur(10px);
+}
+
+
+.viewer.active {
+
+  display: flex;
+
+  animation:
+    fadeIn 0.3s ease;
+}
+
+
+.viewer-content {
+
+  background: #ffffff;
+
+  border-radius: 18px;
+
+  width: 95vw;
+
+  height: 95vh;
+
+  max-width: 1400px;
+
+  position: relative;
+
+  overflow: hidden;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  box-shadow:
+    0 0 60px
+    rgba(255,255,255,0.12);
+
+  animation:
+    zoomIn 0.4s ease;
+}
+
+
+.viewer-content iframe {
+
+  width: 100%;
+
+  height: 100%;
+
+  border: none;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+   ========================================================= */
+
+.close-btn {
+
+  position: absolute;
+
+  top: 15px;
+
+  right: 15px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff4d4d,
+      #dc2626
+    );
+
+  color: white;
+
+  border: none;
+
+  border-radius: 50%;
+
+  font-size: 25px;
+
+  width: 46px;
+
+  height: 46px;
+
+  cursor: pointer;
+
+  z-index: 10;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  box-shadow:
+    0 5px 18px
+    rgba(0,0,0,0.4);
+
   transition:
     transform 0.25s ease,
     box-shadow 0.25s ease;
 }
 
-.document-year-section .pdf-box:hover {
-  transform: translateY(-5px);
+
+.close-btn:hover {
+
+  transform:
+    scale(1.1)
+    rotate(90deg);
 
   box-shadow:
-    0 12px 30px rgba(0, 0, 0, 0.12);
+    0 8px 25px
+    rgba(0,0,0,0.5);
 }
 
 
+/* =========================================================
+   VIEWER ANIMATIONS
+   ========================================================= */
+
+@keyframes zoomIn {
+
+  from {
+
+    transform:
+      scale(0.85);
+
+    opacity: 0;
+
+  }
+
+  to {
+
+    transform:
+      scale(1);
+
+    opacity: 1;
+
+  }
+
+}
 
 
-@media (max-width: 700px) {
+@keyframes fadeIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+footer {
+
+  text-align: center;
+
+  margin: 70px 0 50px;
+
+  font-size: 0.95rem;
+
+  color: #cbd7f7;
+
+  padding: 0 20px;
+}
+
+
+footer p:first-child {
+
+  font-weight: 700;
+
+  color: #ffffff;
+
+  letter-spacing: 1px;
+}
+
+
+footer p:last-child {
+
+  opacity: 0.9;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 992px) {
+
+  .nav-container {
+
+    flex-direction: column;
+
+    align-items: center;
+  }
+
+
+  .nav-left,
+  .nav-right {
+
+    justify-content: center;
+
+    gap: 15px;
+  }
+
+
+  .nav-center h1 {
+
+    font-size: 1.5rem;
+  }
+
+
+  .document-year-section
+  .pdf-grid {
+
+    grid-template-columns:
+      repeat(
+        2,
+        minmax(250px, 1fr)
+      );
+
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .nav-container img {
+
+    width: 55px;
+
+    height: 55px;
+  }
+
+
+  .nav-center h1 {
+
+    font-size: 1.2rem;
+  }
+
+
+  header h2 {
+
+    font-size: 1rem;
+
+    padding:
+      8px 16px;
+  }
+
+
+  .document-year-section {
+
+    margin:
+      45px auto 65px;
+  }
+
 
   .year-title {
+
     width: 95%;
+
     gap: 10px;
+
+    margin-bottom: 30px;
   }
+
 
   .year-line {
-    max-width: 60px;
+
+    max-width: 55px;
   }
+
+
+  .year-line::after {
+
+    width: 5px;
+
+    height: 5px;
+  }
+
 
   .year-content {
-    min-width: 160px;
+
+    min-width: 150px;
   }
+
+
+  .year-icon {
+
+    width: 58px;
+
+    height: 58px;
+
+    font-size: 26px;
+
+    border-radius: 18px;
+  }
+
 
   .year-label {
-    font-size: 34px;
+
+    font-size: 36px;
+
+    letter-spacing: 3px;
   }
 
+
   .year-subtitle {
-    font-size: 9px;
+
+    font-size: 8px;
+
     letter-spacing: 2px;
   }
 
-  .year-icon {
-    width: 45px;
-    height: 45px;
+
+  .document-year-section
+  .pdf-grid {
+
+    width: 92%;
+
+    grid-template-columns:
+      1fr;
+
+    gap: 20px;
   }
 
-  .document-year-section .pdf-grid {
-    width: 95%;
+
+  .document-year-section
+  .pdf-box {
+
+    min-height: 315px;
   }
+
+
+  .document-icon {
+
+    width: 82px;
+
+    height: 82px;
+
+    font-size: 36px;
+
+    border-radius: 23px;
+  }
+
+
+  .document-year-section
+  .pdf-box h3 {
+
+    font-size: 16px;
+  }
+
+
+  .viewer {
+
+    padding: 8px;
+  }
+
+
+  .viewer-content {
+
+    width: 98vw;
+
+    height: 94vh;
+
+    border-radius: 12px;
+  }
+
+
+  .close-btn {
+
+    width: 40px;
+
+    height: 40px;
+
+    font-size: 22px;
+
+    top: 10px;
+
+    right: 10px;
+  }
+
 }
-    }
-  </style>
+
+
+/* =========================================================
+   REDUCED MOTION ACCESSIBILITY
+   ========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation-duration: 0.01ms !important;
+
+    animation-iteration-count: 1 !important;
+
+    transition-duration: 0.01ms !important;
+
+  }
+
+}
+
+</style>
 </head>
 
 <body>
@@ -486,111 +1405,459 @@
      2026 DOCUMENTS
      ======================================================= -->
 
-<section class="document-year-section">
+<!-- =========================================================
+     DOCUMENTS SECTION
+     ========================================================= -->
 
-  <!-- 2026 TITLE -->
-  <div class="year-title">
+<section class="documents-container">
 
-    <div class="year-line"></div>
+  <!-- =======================================================
+       2026 DOCUMENTS
+       ======================================================= -->
 
-    <div class="year-content">
+  <section class="document-year-section">
 
-      <div class="year-icon">
-        📁
+    <div class="year-title">
+
+      <div class="year-line"></div>
+
+      <div class="year-content">
+
+        <div class="year-icon">
+          <span>📁</span>
+        </div>
+
+        <span class="year-label">2026</span>
+
+        <span class="year-subtitle">
+          OFFICIAL DOCUMENTS
+        </span>
+
       </div>
 
-      <span class="year-label">2026</span>
-
-      <span class="year-subtitle">
-        OFFICIAL DOCUMENTS
-      </span>
-
-    </div>
-
-    <div class="year-line"></div>
-
-  </div>
-
-
-  <!-- 2026 PDF GRID -->
-  <section class="pdf-grid">
-
-    <!-- CBYDP 2026 -->
-    <div class="pdf-box"
-         data-src="PDF/CBYDP 2026.pdf">
-
-      <h3>
-        COMPREHENSIVE BARANGAY YOUTH DEVELOPMENT PLAN (CBYDP) 2026
-      </h3>
-
-      <iframe
-        src="PDF/CBYDP 2026.pdf#toolbar=0"
-        title="Comprehensive Barangay Youth Development Plan 2026">
-      </iframe>
+      <div class="year-line"></div>
 
     </div>
 
 
-    <!-- ABYIP 2026 -->
-    <div class="pdf-box"
-         data-src="PDF/ABYIP 26.pdf">
+    <div class="pdf-grid">
 
-      <h3>
-        ANNUAL BARANGAY YOUTH INVESTMENT PROGRAM (ABYIP) 2026
-      </h3>
 
-      <iframe
-        src="PDF/ABYIP 26.pdf#toolbar=0"
-        title="Annual Barangay Youth Investment Program 2026">
-      </iframe>
+      <!-- CBYDP 2026 -->
+
+      <div class="pdf-box"
+           data-src="PDF/CBYDP 2026.pdf">
+
+        <div class="document-icon cbydp-icon">
+          <span>📋</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            YOUTH DEVELOPMENT
+          </div>
+
+          <h3>
+            Comprehensive Barangay Youth Development Program
+          </h3>
+
+          <p>
+            CBYDP 2026
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          01
+        </div>
+
+      </div>
+
+
+
+      <!-- ABYIP 2026 -->
+
+      <div class="pdf-box"
+           data-src="PDF/ABYIP 26.pdf">
+
+        <div class="document-icon abyip-icon">
+          <span>🎯</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            INVESTMENT PROGRAM
+          </div>
+
+          <h3>
+            Annual Barangay Youth Investment Program
+          </h3>
+
+          <p>
+            ABYIP 2026
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          02
+        </div>
+
+      </div>
+
+
+
+      <!-- ANNUAL BUDGET 2026 -->
+
+      <div class="pdf-box"
+           data-src="PDF/ANNUAL BUDGET 2026.pdf">
+
+        <div class="document-icon budget-icon">
+          <span>💰</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            FINANCIAL DOCUMENT
+          </div>
+
+          <h3>
+            Annual Budget
+          </h3>
+
+          <p>
+            Annual Budget 2026
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          03
+        </div>
+
+      </div>
+
+
+
+      <!-- MIPR 2026 -->
+
+      <div class="pdf-box"
+           data-src="PDF/Monthly Itemized List of Purchase Request 2026.pdf">
+
+        <div class="document-icon purchase-icon">
+          <span>🛒</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            PROCUREMENT
+          </div>
+
+          <h3>
+            Monthly Itemized List of Purchase Request
+          </h3>
+
+          <p>
+            MIPR 2026
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          04
+        </div>
+
+      </div>
+
+
+
+      <!-- RCB 2026 -->
+
+      <div class="pdf-box"
+           data-src="PDF/RCB 2026.pdf">
+
+        <div class="document-icon rcb-icon">
+          <span>📊</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            FINANCIAL REPORT
+          </div>
+
+          <h3>
+            Registration / Certification of Budget
+          </h3>
+
+          <p>
+            RCB 2026
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          05
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+
+  <!-- =======================================================
+       2025 DOCUMENTS
+       ======================================================= -->
+
+  <section class="document-year-section">
+
+    <div class="year-title">
+
+      <div class="year-line"></div>
+
+      <div class="year-content">
+
+        <div class="year-icon">
+          <span>📁</span>
+        </div>
+
+        <span class="year-label">2025</span>
+
+        <span class="year-subtitle">
+          OFFICIAL DOCUMENTS
+        </span>
+
+      </div>
+
+      <div class="year-line"></div>
 
     </div>
 
 
-    <!-- ANNUAL BUDGET 2026 -->
-    <div class="pdf-box"
-         data-src="PDF/ANNUAL BUDGET 2026.pdf">
-
-      <h3>
-        ANNUAL BUDGET 2026
-      </h3>
-
-      <iframe
-        src="PDF/ANNUAL BUDGET 2026.pdf#toolbar=0"
-        title="Annual Budget 2026">
-      </iframe>
-
-    </div>
+    <div class="pdf-grid">
 
 
-    <!-- MIPR 2026 -->
-    <div class="pdf-box"
-         data-src="PDF/Monthly Itemized List of Purchase Request 2026.pdf">
+      <!-- CBYDP 2025 -->
 
-      <h3>
-        MONTHLY ITEMIZED LIST OF PURCHASE REQUEST 2026
-      </h3>
+      <div class="pdf-box"
+           data-src="PDF/Comprehensive Barangay Youth Development.pdf">
 
-      <iframe
-        src="PDF/Monthly Itemized List of Purchase Request 2026.pdf#toolbar=0"
-        title="Monthly Itemized List of Purchase Request 2026">
-      </iframe>
+        <div class="document-icon cbydp-icon">
+          <span>📋</span>
+        </div>
 
-    </div>
+        <div class="document-content">
+
+          <div class="document-category">
+            YOUTH DEVELOPMENT
+          </div>
+
+          <h3>
+            Comprehensive Barangay Youth Development Program
+          </h3>
+
+          <p>
+            CBYDP 2025
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          01
+        </div>
+
+      </div>
 
 
-    <!-- RCB 2026 -->
-    <div class="pdf-box"
-         data-src="PDF/RCB 2026.pdf">
 
-      <h3>
-        REGISTER OF CASH IN BANK (RCB) 2026
-      </h3>
+      <!-- ABYIP 2025 -->
 
-      <iframe
-        src="PDF/RCB 2026.pdf#toolbar=0"
-        title="Register of Cash in Bank 2026">
-      </iframe>
+      <div class="pdf-box"
+           data-src="PDF/ABYIP.pdf">
+
+        <div class="document-icon abyip-icon">
+          <span>🎯</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            INVESTMENT PROGRAM
+          </div>
+
+          <h3>
+            Annual Barangay Youth Investment Program
+          </h3>
+
+          <p>
+            ABYIP 2025
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          02
+        </div>
+
+      </div>
+
+
+
+      <!-- ANNUAL BUDGET 2025 -->
+
+      <div class="pdf-box"
+           data-src="PDF/Annual Budget.pdf">
+
+        <div class="document-icon budget-icon">
+          <span>💰</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            FINANCIAL DOCUMENT
+          </div>
+
+          <h3>
+            Annual Budget
+          </h3>
+
+          <p>
+            Annual Budget 2025
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          03
+        </div>
+
+      </div>
+
+
+
+      <!-- MIPR 2025 -->
+
+      <div class="pdf-box"
+           data-src="PDF/MIPR.pdf">
+
+        <div class="document-icon purchase-icon">
+          <span>🛒</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            PROCUREMENT
+          </div>
+
+          <h3>
+            Monthly Itemized List of Purchase Request
+          </h3>
+
+          <p>
+            MIPR 2025
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          04
+        </div>
+
+      </div>
+
+
+
+      <!-- RCB 2025 -->
+
+      <div class="pdf-box"
+           data-src="PDF/roc.pdf">
+
+        <div class="document-icon rcb-icon">
+          <span>📊</span>
+        </div>
+
+        <div class="document-content">
+
+          <div class="document-category">
+            FINANCIAL REPORT
+          </div>
+
+          <h3>
+            Registration / Certification of Budget
+          </h3>
+
+          <p>
+            RCB 2025
+          </p>
+
+          <div class="document-button">
+            <span>VIEW DOCUMENT</span>
+            <span class="arrow">→</span>
+          </div>
+
+        </div>
+
+        <div class="document-number">
+          05
+        </div>
+
+      </div>
+
 
     </div>
 
@@ -600,127 +1867,9 @@
 
 
 
-<!-- =======================================================
-     2025 DOCUMENTS
-     ======================================================= -->
-
-<section class="document-year-section">
-
-  <!-- 2025 TITLE -->
-  <div class="year-title">
-
-    <div class="year-line"></div>
-
-    <div class="year-content">
-
-      <div class="year-icon">
-        📁
-      </div>
-
-      <span class="year-label">2025</span>
-
-      <span class="year-subtitle">
-        OFFICIAL DOCUMENTS
-      </span>
-
-    </div>
-
-    <div class="year-line"></div>
-
-  </div>
-
-
-  <!-- 2025 PDF GRID -->
-  <section class="pdf-grid">
-
-    <!-- CBYDP 2025 -->
-    <div class="pdf-box"
-         data-src="PDF/Comprehensive Barangay Youth Development.pdf">
-
-      <h3>
-        COMPREHENSIVE BARANGAY YOUTH DEVELOPMENT PLAN (CBYDP) 2025
-      </h3>
-
-      <iframe
-        src="PDF/Comprehensive Barangay Youth Development.pdf#toolbar=0"
-        title="Comprehensive Barangay Youth Development Plan 2025">
-      </iframe>
-
-    </div>
-
-
-    <!-- ABYIP 2025 -->
-    <div class="pdf-box"
-         data-src="PDF/ABYIP.pdf">
-
-      <h3>
-        ANNUAL BARANGAY YOUTH INVESTMENT PROGRAM (ABYIP) 2025
-      </h3>
-
-      <iframe
-        src="PDF/ABYIP.pdf#toolbar=0"
-        title="Annual Barangay Youth Investment Program 2025">
-      </iframe>
-
-    </div>
-
-
-    <!-- ANNUAL BUDGET 2025 -->
-    <div class="pdf-box"
-         data-src="PDF/Annual Budget.pdf">
-
-      <h3>
-        ANNUAL BUDGET 2025
-      </h3>
-
-      <iframe
-        src="PDF/Annual Budget.pdf#toolbar=0"
-        title="Annual Budget 2025">
-      </iframe>
-
-    </div>
-
-
-    <!-- MIPR 2025 -->
-    <div class="pdf-box"
-         data-src="PDF/MIPR.pdf">
-
-      <h3>
-        MONTHLY ITEMIZED LIST OF PURCHASE REQUEST 2025
-      </h3>
-
-      <iframe
-        src="PDF/MIPR.pdf#toolbar=0"
-        title="Monthly Itemized List of Purchase Request 2025">
-      </iframe>
-
-    </div>
-
-
-    <!-- RCB 2025 -->
-    <div class="pdf-box"
-         data-src="PDF/roc.pdf">
-
-      <h3>
-        REGISTER OF CASH IN BANK (RCB) 2025
-      </h3>
-
-      <iframe
-        src="PDF/roc.pdf#toolbar=0"
-        title="Register of Cash in Bank 2025">
-      </iframe>
-
-    </div>
-
-  </section>
-
-</section>
-
-
-
-<!-- =======================================================
-     PDF FULLSCREEN VIEWER
-     ======================================================= -->
+<!-- =========================================================
+     PDF VIEWER
+     ========================================================= -->
 
 <div class="viewer" id="viewer">
 
@@ -729,8 +1878,7 @@
     <button
       class="close-btn"
       id="closeBtn"
-      type="button"
-      aria-label="Close PDF viewer">
+      aria-label="Close document">
       &times;
     </button>
 
@@ -740,129 +1888,81 @@
 
 
 
-<!-- =======================================================
-     JAVASCRIPT
-     ======================================================= -->
+<!-- =========================================================
+     DOCUMENT JAVASCRIPT
+     ========================================================= -->
 
 <script>
 
-  // ============================================
-  // PDF VIEWER
-  // ============================================
+const boxes = document.querySelectorAll('.pdf-box');
 
-  const boxes = document.querySelectorAll('.pdf-box');
-  const viewer = document.getElementById('viewer');
-  const viewerContent = document.getElementById('viewer-content');
+const viewer = document.getElementById('viewer');
 
-
-  boxes.forEach(box => {
-
-    box.addEventListener('click', () => {
-
-      const src = box.getAttribute('data-src');
-
-      viewer.classList.add('active');
-
-      viewerContent.innerHTML = `
-        <button
-          class="close-btn"
-          id="closeBtn"
-          type="button"
-          aria-label="Close PDF viewer">
-          &times;
-        </button>
-
-        <iframe
-          src="${src}#toolbar=1"
-          title="PDF Document">
-        </iframe>
-      `;
+const viewerContent =
+  document.getElementById('viewer-content');
 
 
-      const closeBtn =
-        document.getElementById('closeBtn');
+boxes.forEach((box) => {
 
-      closeBtn.addEventListener('click', () => {
+  box.addEventListener('click', () => {
+
+    const src = box.getAttribute('data-src');
+
+    viewer.classList.add('active');
+
+    viewerContent.innerHTML = `
+
+      <button
+        class="close-btn"
+        id="closeBtn"
+        aria-label="Close document">
+        &times;
+      </button>
+
+      <iframe
+        src="${src}#toolbar=1"
+        title="Official Document">
+      </iframe>
+
+    `;
+
+    document
+      .getElementById('closeBtn')
+      .addEventListener('click', () => {
 
         viewer.classList.remove('active');
 
       });
 
-    });
-
   });
 
-
-  // ============================================
-  // CLOSE WHEN CLICKING OUTSIDE PDF
-  // ============================================
-
-  viewer.addEventListener('click', event => {
-
-    if (event.target === viewer) {
-
-      viewer.classList.remove('active');
-
-    }
-
-  });
+});
 
 
-  // ============================================
-  // CLOSE WITH ESCAPE
-  // ============================================
+/* Close when clicking outside PDF */
 
-  window.addEventListener('keydown', event => {
+viewer.addEventListener('click', (event) => {
 
-    if (event.key === 'Escape') {
+  if (event.target === viewer) {
 
-      viewer.classList.remove('active');
-
-    }
-
-  });
-
-
-  // ============================================
-  // SAFARI PDF FIX
-  // ============================================
-
-  const isSafari =
-    /^((?!chrome|android).)*safari/i
-      .test(navigator.userAgent);
-
-
-  if (isSafari) {
-
-    document
-      .querySelectorAll('.pdf-box iframe')
-      .forEach(frame => {
-
-        const src =
-          frame.getAttribute('src');
-
-        const obj =
-          document.createElement('object');
-
-        obj.setAttribute('data', src);
-
-        obj.setAttribute(
-          'type',
-          'application/pdf'
-        );
-
-        obj.style.width = '100%';
-
-        obj.style.height = '260px';
-
-        frame.parentNode.replaceChild(
-          obj,
-          frame
-        );
-
-      });
+    viewer.classList.remove('active');
 
   }
+
+});
+
+
+/* Close with ESC */
+
+window.addEventListener('keydown', (event) => {
+
+  if (event.key === 'Escape') {
+
+    viewer.classList.remove('active');
+
+  }
+
+});
 
 </script>
 </body>
