@@ -1116,33 +1116,479 @@ header h2 {
    FOOTER
    ========================================================= */
 
-footer {
+<style>
+
+/* =========================================================
+   CREATIVE FOOTER
+   ========================================================= */
+
+.site-footer {
+
+  position: relative;
+
+  margin-top: 100px;
+
+  padding:
+    55px 20px 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      #061b46 0%,
+      #092968 50%,
+      #04152f 100%
+    );
+
+  border-top:
+    4px solid
+    rgba(255,255,255,0.15);
+
+  overflow: hidden;
+
+  box-shadow:
+    0 -15px 40px
+    rgba(0,0,0,0.25);
+
+}
+
+
+/* =========================================================
+   DECORATIVE GLOW
+   ========================================================= */
+
+.footer-glow {
+
+  position: absolute;
+
+  width: 300px;
+
+  height: 300px;
+
+  left: 50%;
+
+  top: -220px;
+
+  transform:
+    translateX(-50%);
+
+  border-radius: 50%;
+
+  background:
+    rgba(58,102,200,0.18);
+
+  filter:
+    blur(5px);
+
+  pointer-events: none;
+
+}
+
+
+/* =========================================================
+   FOOTER CONTENT
+   ========================================================= */
+
+.footer-content {
+
+  max-width: 900px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 25px;
 
   text-align: center;
 
-  margin: 70px 0 50px;
+  position: relative;
 
-  font-size: 0.95rem;
+  z-index: 2;
 
-  color: #cbd7f7;
-
-  padding: 0 20px;
 }
 
 
-footer p:first-child {
+/* =========================================================
+   FOOTER ICON
+   ========================================================= */
 
-  font-weight: 700;
+.footer-icon {
+
+  width: 70px;
+
+  height: 70px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #dce6ff
+    );
+
+  font-size: 30px;
+
+  box-shadow:
+    0 10px 25px
+    rgba(0,0,0,0.3);
+
+  animation:
+    footerFloat 3s ease-in-out infinite;
+
+}
+
+
+/* =========================================================
+   FOOTER FLOAT ANIMATION
+   ========================================================= */
+
+@keyframes footerFloat {
+
+  0%,
+  100% {
+
+    transform:
+      translateY(0)
+      rotate(0deg);
+
+  }
+
+  50% {
+
+    transform:
+      translateY(-6px)
+      rotate(2deg);
+
+  }
+
+}
+
+
+/* =========================================================
+   MAIN FOOTER TEXT
+   ========================================================= */
+
+.footer-main {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+}
+
+
+.footer-main h3 {
 
   color: #ffffff;
 
+  font-size: 1.25rem;
+
+  font-weight: 900;
+
   letter-spacing: 1px;
+
+  margin: 0;
 }
 
 
-footer p:last-child {
+/* =========================================================
+   TAGLINE
+   ========================================================= */
 
-  opacity: 0.9;
+.footer-tagline {
+
+  margin-top: 7px;
+
+  color: #b9c9ee;
+
+  font-size: 0.75rem;
+
+  font-weight: 600;
+
+  letter-spacing: 2px;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   DIVIDER
+   ========================================================= */
+
+.footer-divider {
+
+  width: 80px;
+
+  height: 2px;
+
+  margin:
+    15px auto 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #ffffff,
+      transparent
+    );
+
+  position: relative;
+}
+
+
+.footer-divider::after {
+
+  content: "◆";
+
+  position: absolute;
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+    translate(-50%, -50%);
+
+  font-size: 7px;
+
+  color: #ffffff;
+
+  background: #092968;
+
+  padding: 0 7px;
+}
+
+
+/* =========================================================
+   EMAIL
+   ========================================================= */
+
+.footer-email {
+
+  color: #ffffff;
+
+  text-decoration: none;
+
+  font-size: 0.9rem;
+
+  font-weight: 600;
+
+  letter-spacing: 0.5px;
+
+  padding:
+    7px 15px;
+
+  border-radius: 20px;
+
+  transition:
+    all 0.3s ease;
+
+}
+
+
+.footer-email:hover {
+
+  background:
+    rgba(255,255,255,0.1);
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 5px 15px
+    rgba(0,0,0,0.2);
+
+}
+
+
+/* =========================================================
+   BOTTOM FOOTER
+   ========================================================= */
+
+.footer-bottom {
+
+  max-width: 1100px;
+
+  margin:
+    35px auto 0;
+
+  padding-top: 20px;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,0.12);
+
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+
+  color: #9fb2db;
+
+  font-size: 0.72rem;
+
+  letter-spacing: 0.5px;
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+
+.footer-dot {
+
+  color: #ffffff;
+
+  opacity: 0.5;
+
+}
+
+
+/* =========================================================
+   FOOTER HOVER EFFECT
+   ========================================================= */
+
+.site-footer::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: -100%;
+
+  width: 60%;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255,255,255,0.7),
+      transparent
+    );
+
+  animation:
+    footerLight 7s linear infinite;
+
+}
+
+
+@keyframes footerLight {
+
+  0% {
+    left: -100%;
+  }
+
+  100% {
+    left: 150%;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE FOOTER
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .site-footer {
+
+    margin-top: 70px;
+
+    padding:
+      45px 15px 20px;
+
+  }
+
+
+  .footer-content {
+
+    flex-direction: column;
+
+    gap: 15px;
+
+  }
+
+
+  .footer-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    font-size: 26px;
+
+    border-radius: 17px;
+
+  }
+
+
+  .footer-main h3 {
+
+    font-size: 1rem;
+
+  }
+
+
+  .footer-tagline {
+
+    font-size: 8px;
+
+    letter-spacing: 1.5px;
+
+  }
+
+
+  .footer-email {
+
+    font-size: 0.8rem;
+
+  }
+
+
+  .footer-bottom {
+
+    flex-direction: column;
+
+    gap: 5px;
+
+    font-size: 0.68rem;
+
+  }
+
+
+  .footer-dot {
+
+    display: none;
+
+  }
+
+}
+
+
 }
 
 
@@ -1965,5 +2411,57 @@ window.addEventListener('keydown', (event) => {
 });
 
 </script>
+  
 </body>
+  <footer class="site-footer">
+
+  <div class="footer-glow"></div>
+
+  <div class="footer-content">
+
+    <!-- Logo / Icon -->
+    <div class="footer-icon">
+      📜
+    </div>
+
+    <!-- Main Footer Text -->
+    <div class="footer-main">
+
+      <h3>
+        Sangguniang Kabataan ng Malinao
+      </h3>
+
+      <p class="footer-tagline">
+        Transparency • Accountability • Youth Leadership
+      </p>
+
+      <div class="footer-divider"></div>
+
+      <a
+        href="mailto:skmalinao23@gmail.com"
+        class="footer-email">
+        ✉️ skmalinao23@gmail.com
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <!-- Bottom Footer -->
+  <div class="footer-bottom">
+
+    <span>
+      © 2026 Sangguniang Kabataan ng Malinao
+    </span>
+
+    <span class="footer-dot">•</span>
+
+    <span>
+      Full Disclosure Board
+    </span>
+
+  </div>
+
+</footer>
 </html>
